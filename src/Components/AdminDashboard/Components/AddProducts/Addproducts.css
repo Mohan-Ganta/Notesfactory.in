@@ -1,0 +1,7 @@
+.upload-single-product{
+    width: 40vw;
+    height: fit-content;
+    padding: 40px 80px;
+    margin: 1vh auto;
+    animation: slideDown 0.5s ease-in-out;
+}
