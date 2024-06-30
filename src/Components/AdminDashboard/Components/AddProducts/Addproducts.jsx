@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Select, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Select } from "antd";
 import "./Addproducts.css";
 
 const Addproducts = () => {
   const [imagefile, setImageFile] = useState();
   const [file, setFile] = useState();
-  const options = ["Books", "SourceCodes", "Arts & Drawings"];
   const handleSubmitForm = (vals) => {
     console.log(vals);
   };
