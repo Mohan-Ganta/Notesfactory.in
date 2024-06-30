@@ -1,0 +1,45 @@
+.main-prod-full{
+    display: flex;
+    width: 80%;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    margin-top: 15vh;
+    padding-bottom: 20px;
+    background-color: rgb(198, 228, 255);
+    border-radius: 10px;
+}
+
+.prod-img{
+
+    width: 50%;
+    padding: 20px 0;
+   
+}
+
+.prod-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+    text-align: left;
+    padding-left: 30px;
+}
+.prod-content p{
+    font-size: 20px;
+    width: 90%;
+}
+
+.prod-content button{
+
+    width: 30%;
+    height: 30px;
+    margin: 5px;
+    background-color: #1976D2;
+    border-radius: 5px;
+    color: white;
+    font-size: 20px;
+    border: none;
+    padding:0 10px;
+    
+
+}
