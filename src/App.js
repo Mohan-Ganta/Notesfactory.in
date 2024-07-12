@@ -5,6 +5,7 @@ import Register from './Components/UserDashboard/Components/Register/Register';
 import NavBar from './Components/PageComponents/NavBar';
 import Footer from './Components/PageComponents/Footer'
 import Login from './Components/UserDashboard/Components/Login/Login';
+import Landing from './Components/UserDashboard/Components/Dashboard'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/login' element={<Login />}/>
           <Route path='/admin' element={<Dashboard />}/>
           <Route path='register' element={<Register />}></Route>
+          <Route path='land' element={<Landing/>} />
         </Routes>
       </BrowserRouter>
       <Footer />

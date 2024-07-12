@@ -1,0 +1,32 @@
+.cont-hero{
+
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10%;
+}
+.hero-content{
+
+    width: 50%;
+   
+}
+
+.hero-content h1{
+
+    font-size: 50px;
+}
+
+.hero-sub-cont {
+    display: flex;
+   align-items: center;
+   justify-content: space-evenly;
+}
+.hero-sub-cont button{
+
+    height: 30px;
+    background-color: black;
+    color: white;
+    width: 60px;
+    border: none;
+    border-radius: 5px;
+}
+
