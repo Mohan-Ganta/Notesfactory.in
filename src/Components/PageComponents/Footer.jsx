@@ -11,6 +11,9 @@ export const Footer=()=> {
         backgroundColor: "#1976D2",
         paddingTop: "1rem",
         paddingBottom: "1rem",
+        position : "relative",
+        bottom:"0"
+
       }}
     >
       <Container maxWidth="lg">

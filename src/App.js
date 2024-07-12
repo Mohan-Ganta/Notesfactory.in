@@ -13,8 +13,9 @@ function App() {
       <NavBar />
       <BrowserRouter>
         <Routes>
-
+          <Route path='/' element={<Cart />} />
           <Route path='/login' element={<Login />}/>
+          <Route path='/home' element={<ProductCard />}/>
           <Route path='/admin' element={<Dashboard />}/>
           <Route path='register' element={<Register />}></Route>
           <Route path='land' element={<Landing/>} />
