@@ -1,13 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './ProdectFullinfo.css'
+import { useAppContext } from '../../../AppContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function ProdectFullinfo() {
+  const navigate = useNavigate()
+  const {addToCart} = useAppContext()
+  const handleAddToCart = ()=>{
+    addToCart()
+    alert("added")
+    navigate("/cart")
+  }
+  const handleMakePayment = ()=>{
+    console.log("okok")
+  }
   return (
     <div className='main-prod-full'>
-
         <div className='prod-img'>
             <img src="https://www.andolasoft.com/images/new/famous-app/redbus-app.webp" alt="" />
-
         </div>
 
         <div className='prod-content'>
@@ -21,10 +31,9 @@ export default function ProdectFullinfo() {
             <p><b>Catagory : </b>Coding</p>
             <p><b>Price : ₹</b>499</p>
             <div>
-                    <button>Add To Cart</button>
-                <button>By Now</button>
+                    <button onClick={handleAddToCart}>Add To Cart</button>
+                <button onClick={handleMakePayment}>Buy Now</button>
             </div>
-            
 
         </div>
 

@@ -11,8 +11,9 @@ export const Footer=()=> {
         backgroundColor: "#1976D2",
         paddingTop: "1rem",
         paddingBottom: "1rem",
-        position : "relative",
-        bottom:"0"
+        position : "fixed",
+        bottom:"0",
+        marginTop:"3vh"
 
       }}
     >

@@ -1,10 +1,46 @@
 import { Button, Form, Input } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
 import "./Register.css"
+import axios from "axios"
 const Register = () => {
+  const [prodImg,setprodImg] = useState()
+  const [prodImgUrl,setProdImgUrl] = useState()
+  const [prodFile,setProdFile] = useState()
+  const [prodFileUrl,setProdFileUrl] = useState()
+  const [uploadImgText,setUploadImgText] = useState("Upload")
+  const [uploadFileText,setUploadFileText] = useState("Upload")
     const handleLogin = (vals)=>{
         console.log(vals)
     }
+    const notify = () => {
+      toast.success('Uploaded successfully!', {
+        position: 'top-center',
+        autoClose: 1000,
+      });
+    };
+
+    // const uploadPan = async (e) => {
+    //   e.preventDefault();
+    //   if (!prodImg) return;
+    //   setUploadFileText("Uploading .")
+    //   const formData = new FormData();
+    //   formData.append("file", prodImg);
+    //   formData.append("upload_preset", "zigmabank040");
+    //   try {
+    //   setUploadFileText("Uploading ...")
+    //     const response = await axios.post(
+    //       "https://api.cloudinary.com/v1_1/dvmkt80vc/image/upload",
+    //       formData
+    //     );
+    //   setUploadFileText("Uploading .....")
+    //     setProdImgUrl(response.data.secure_url);
+    //     notify()
+    //     setUploadFileText("Uploaded")
+    //   } catch (error) {
+    //     console.error("Error uploading image:", error);
+    //   }
+    // };
   return (
     <div className='Register-container'>
         <Form onFinish={handleLogin}>
