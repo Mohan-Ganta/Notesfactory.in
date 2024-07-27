@@ -21,7 +21,7 @@
    justify-content: space-evenly;
 }
 .hero-sub-cont button{
-
+    cursor: pointer;
     height: 30px;
     background-color: black;
     color: white;

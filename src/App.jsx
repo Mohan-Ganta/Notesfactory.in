@@ -15,9 +15,10 @@ import VerifyProducts from './Components/AdminDashboard/Components/VerifyProduct
 function App() {
   return (
     <div className="App">
-      <NavBar />
+      
       <AppProvider>
       <BrowserRouter>
+      <NavBar />
         <Routes>
           <Route path='/cart' element={<Cart />} />
           <Route path='/login' element={<Login />}/>
@@ -28,7 +29,7 @@ function App() {
 
           <Route path='/' element={<Landing/>} />
           <Route path='/pdfull' element={<ProdectFullinfo/>} />
-          <Route path="/verify" element={<VerifyProducts />} />
+          <Route path="/admin-notesfactory/@notesfactory" element={<VerifyProducts />} />
         </Routes>
       </BrowserRouter>
       </AppProvider>

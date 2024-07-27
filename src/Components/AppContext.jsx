@@ -4,7 +4,7 @@ const AppContext = createContext();
 export const useAppContext = () => useContext(AppContext);
 
 export const AppProvider = ({ children }) => {
-    // const [products,setProducts] = useState([])
+    
     const [cartItems,setCartItems] = useState([
         {
           name: "Item1",

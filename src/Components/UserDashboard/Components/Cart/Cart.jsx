@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from "react";
 import "./Cart.css";
 import { useAppContext } from "../../../AppContext";
-
-const Item = ({ index, item, removeFromCart }) => {
-  const handleRemove = () => {
-    removeFromCart(index);
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
+const Item = ({ index, item, fetchCartItems }) => {
+  const customerdata = JSON.parse(localStorage.getItem("userdata"))
+ 
+  const handleRemove = (id) => {
+    axios.delete(`http://localhost:5000/removefromcart/${customerdata._id}/${id}`)
+    .then(res=>{
+      fetchCartItems()
+      console.log(res.data)
+    })
+    .catch()
   };
+
 
   const handlePayment = ()=>{
     
@@ -14,7 +23,7 @@ const Item = ({ index, item, removeFromCart }) => {
     <div className="card-item">
       <div className="item-left">
         <div className="img-box">
-          <img src={item.img} alt="img-item" />
+          <img src={item.image} alt="img-item" />
         </div>
         <div className="item-content">
           <p>
@@ -27,7 +36,7 @@ const Item = ({ index, item, removeFromCart }) => {
         <h3> Rs. {item.cost}</h3>
       </div>
       <div className="delete-btn">
-        <button onClick={handleRemove}>-</button>
+        <button onClick={()=>handleRemove(item._id)}>-</button>
       </div>
     </div>
   );
@@ -35,19 +44,29 @@ const Item = ({ index, item, removeFromCart }) => {
 const Cart = () => {
   const {cartItems} = useAppContext()
   const data = [];
-  const [products, setProducts] = useState(cartItems);
+  const [products, setProducts] = useState([]);
+  const [userdata,setUserdata] = useState(JSON.parse(localStorage.getItem("userdata")))
+
   const [total, setTotal] = useState(0);
-  const caluculateTotal = () => {
+  const caluculateTotal = (items) => {
     var sum = 0;
-    for (var i = 0; i < products.length; i++) {
-      sum += products[i].cost;
+    for (var i = 0; i < items.length; i++) {
+      sum += items[i].cost;
     }
     setTotal(sum);
   };
-  useEffect(() => {
-    caluculateTotal();
-  }, [products]);
-
+  const fetchCartItems = ()=>{
+    axios.get(`http://localhost:5000/users/getcartitems/${userdata._id}`)
+    .then(res=>{
+      console.log(res.data)
+      setProducts(res.data)
+      caluculateTotal(res.data)})  
+    .catch(err=>console.log(err))
+  }
+  useEffect(()=>{
+    fetchCartItems()
+  },[])
+  
   const removeItem = (index) => {
     var list = [...products];
     list.splice(index, 1);
@@ -64,7 +83,7 @@ const Cart = () => {
         <>
           {products.map((item, index) => {
             return (
-              <Item index={index} item={item} removeFromCart={removeItem} />
+              <Item index={index} item={item}  fetchCartItems={fetchCartItems}/>
             );
           })}
           <button style={{margin:"0 auto"}}>Proceed to payment</button>

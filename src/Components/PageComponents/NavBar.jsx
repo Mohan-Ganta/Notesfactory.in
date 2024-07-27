@@ -15,6 +15,8 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -59,6 +61,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function NavBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -78,6 +81,10 @@ export default function NavBar() {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleCartClick = () => {
+    navigate('/cart');
   };
 
   const menuId = 'primary-search-account-menu';
@@ -120,8 +127,8 @@ export default function NavBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
+        <IconButton size="large" aria-label="show 9 new mails" color="inherit">
+          <Badge badgeContent={9} color="error">
             <MailIcon />
           </Badge>
         </IconButton>
@@ -130,10 +137,10 @@ export default function NavBar() {
       <MenuItem>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label="show 16 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={16} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -150,6 +157,18 @@ export default function NavBar() {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+      </MenuItem>
+      <MenuItem onClick={handleCartClick}>
+        <IconButton
+          size="large"
+          aria-label="show cart items"
+          color="inherit"
+        >
+          <Badge badgeContent={8} color="error">
+            <ShoppingCartIcon />
+          </Badge>
+        </IconButton>
+        <p>Cart</p>
       </MenuItem>
     </Menu>
   );
@@ -198,6 +217,16 @@ export default function NavBar() {
             >
               <Badge badgeContent={17} color="error">
                 <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show cart items"
+              color="inherit"
+              onClick={handleCartClick}
+            >
+              <Badge badgeContent={3} color="error">
+                <ShoppingCartIcon />
               </Badge>
             </IconButton>
             <IconButton

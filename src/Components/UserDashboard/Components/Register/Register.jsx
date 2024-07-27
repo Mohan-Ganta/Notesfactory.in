@@ -10,50 +10,30 @@ const Register = () => {
   const [prodFileUrl,setProdFileUrl] = useState()
   const [uploadImgText,setUploadImgText] = useState("Upload")
   const [uploadFileText,setUploadFileText] = useState("Upload")
-    const handleLogin = (vals)=>{
+    const handleRegister = (vals)=>{
         console.log(vals)
+        const url = "http://localhost:5000/users/register"
+        axios.post(url,vals)
+        .then(res=>toast.success("User Registration successful",{position:"top-center"}))
+        .catch(err=>toast.error("Registration Failed",{position:"top-center"}))
     }
-    const notify = () => {
-      toast.success('Uploaded successfully!', {
-        position: 'top-center',
-        autoClose: 1000,
-      });
-    };
+    
 
-    // const uploadPan = async (e) => {
-    //   e.preventDefault();
-    //   if (!prodImg) return;
-    //   setUploadFileText("Uploading .")
-    //   const formData = new FormData();
-    //   formData.append("file", prodImg);
-    //   formData.append("upload_preset", "zigmabank040");
-    //   try {
-    //   setUploadFileText("Uploading ...")
-    //     const response = await axios.post(
-    //       "https://api.cloudinary.com/v1_1/dvmkt80vc/image/upload",
-    //       formData
-    //     );
-    //   setUploadFileText("Uploading .....")
-    //     setProdImgUrl(response.data.secure_url);
-    //     notify()
-    //     setUploadFileText("Uploaded")
-    //   } catch (error) {
-    //     console.error("Error uploading image:", error);
-    //   }
-    // };
+
   return (
     <div className='Register-container'>
-        <Form onFinish={handleLogin}>
+      <ToastContainer/>
+        <Form onFinish={handleRegister}>
         <Form.Item className='label' label="Username"></Form.Item>
-        <Form.Item name="username" >
+        <Form.Item name="Name" >
           <Input block placeholder='Enter your email address' required></Input>
         </Form.Item>
         <Form.Item className='label' label="Email"></Form.Item>
-        <Form.Item name="email" >
+        <Form.Item name="Email" >
           <Input block placeholder='Enter your email address' required></Input>
         </Form.Item>
         <Form.Item  className='label' label="Password"></Form.Item>
-        <Form.Item name="password" >
+        <Form.Item name="Password" >
           <Input.Password block placeholder='Password' required></Input.Password>
         </Form.Item>
         <Form.Item>

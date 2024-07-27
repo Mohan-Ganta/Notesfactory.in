@@ -10,10 +10,8 @@
 }
 
 .prod-img{
-    
     width: 50%;
-    padding: 20px 0;
-   
+    padding: 20px 0; 
 }
 
 .prod-content{
@@ -42,4 +40,9 @@
     padding:0 10px;
     
 
+}
+
+
+.container-for-products{
+     
 }
