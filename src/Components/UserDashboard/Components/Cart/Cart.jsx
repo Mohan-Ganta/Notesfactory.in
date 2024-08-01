@@ -3,9 +3,9 @@ import "./Cart.css";
 import { useAppContext } from "../../../AppContext";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const Item = ({ index, item, fetchCartItems }) => {
   const customerdata = JSON.parse(localStorage.getItem("userdata"))
- 
   const handleRemove = (id) => {
     axios.delete(`http://localhost:5000/removefromcart/${customerdata._id}/${id}`)
     .then(res=>{
@@ -16,9 +16,7 @@ const Item = ({ index, item, fetchCartItems }) => {
   };
 
 
-  const handlePayment = ()=>{
-    
-  }
+  
   return (
     <div className="card-item">
       <div className="item-left">
@@ -46,6 +44,7 @@ const Cart = () => {
   const data = [];
   const [products, setProducts] = useState([]);
   const [userdata,setUserdata] = useState(JSON.parse(localStorage.getItem("userdata")))
+  const navigate = useNavigate()
 
   const [total, setTotal] = useState(0);
   const caluculateTotal = (items) => {
@@ -72,6 +71,9 @@ const Cart = () => {
     list.splice(index, 1);
     setProducts(list);
   };
+  const handlePayment = ()=>{
+    navigate('/payments',{state:products})
+  }
   return (
     <div className="cart-container">
       <div className="total">
@@ -86,7 +88,7 @@ const Cart = () => {
               <Item index={index} item={item}  fetchCartItems={fetchCartItems}/>
             );
           })}
-          <button style={{margin:"0 auto"}}>Proceed to payment</button>
+          <button onClick={handlePayment} style={{margin:"0 auto"}} >Proceed to payment</button>
         </>
       )}
     </div>

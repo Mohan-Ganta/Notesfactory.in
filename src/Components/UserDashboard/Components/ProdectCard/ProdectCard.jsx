@@ -63,7 +63,9 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Modal, Box, Grid, IconButton } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CloseIcon from '@mui/icons-material/Close';
-
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 // Dummy data for products
 const dummyProducts = [
   {
@@ -205,27 +207,47 @@ const StyledCardMedia = styled(CardMedia)({
 
 export default function ProdectCard() {
   const [products, setProducts] = React.useState(dummyProducts);
-  const [isloading, setIsloading] = React.useState(false); // Set to false since we are using dummy data
+  const [isloading, setIsloading] = React.useState(true); // Set to false since we are using dummy data
   const [open, setOpen] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState(null);
 
+  React.useEffect(()=>{
+    const url = `http://localhost:5000/products/getAllProducts`
+    axios.get(url)
+    .then(res=>{
+      setProducts(res.data)
+      setIsloading(false)
+    })
+  },[])
   const handleOpen = (product) => {
     setSelectedProduct(product);
     setOpen(true);
   };
 
-  const handleClose = () => setOpen(false);
 
+  const handleClose = () => setOpen(false);
+  const customerdata = JSON.parse(localStorage.getItem("userdata"))
   const handleAddToCart = (product) => {
     console.log('Add to Cart:', product);
+    const list = [product]
+    console.log(list)
+    const url = `http://localhost:5000/users/addtocart/${customerdata._id}`
+    axios.post(url,{userId:customerdata._id,Products:list})
+    .then(res=>{
+      toast.success("Added to cart ",{position:"top-center"})
+    })
   };
 
+  const navigate = useNavigate()
   const handleBuyNow = (product) => {
     console.log('Buy Now:', product);
+    const list = [product]
+    navigate("/payments",{state : list})
   };
 
   return (
     <Box sx={{ flexGrow: 1, padding: 3 }}>
+      <ToastContainer />
       {isloading ? (
         <Typography variant="h4" component="h2">Loading....</Typography>
       ) : (
