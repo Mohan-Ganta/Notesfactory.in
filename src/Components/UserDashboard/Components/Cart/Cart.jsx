@@ -4,10 +4,12 @@ import { useAppContext } from "../../../AppContext";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { Form } from "antd";
 const Item = ({ index, item, fetchCartItems }) => {
   const customerdata = JSON.parse(localStorage.getItem("userdata"))
   const handleRemove = (id) => {
-    axios.delete(`http://localhost:5000/removefromcart/${customerdata._id}/${id}`)
+    console.log(id)
+    axios.delete(`http://localhost:5000/users/removefromcart/${customerdata._id}/${id}`)
     .then(res=>{
       fetchCartItems()
       console.log(res.data)
@@ -40,9 +42,9 @@ const Item = ({ index, item, fetchCartItems }) => {
   );
 };
 const Cart = () => {
-  const {cartItems} = useAppContext()
-  const data = [];
+  
   const [products, setProducts] = useState([]);
+  const [isempty,setEmpty] = useState(true)
   const [userdata,setUserdata] = useState(JSON.parse(localStorage.getItem("userdata")))
   const navigate = useNavigate()
 
@@ -60,7 +62,10 @@ const Cart = () => {
       console.log(res.data)
       setProducts(res.data)
       caluculateTotal(res.data)})  
-    .catch(err=>console.log(err))
+    .catch(err=>{
+      setProducts([])
+      console.log(err)
+    })
   }
   useEffect(()=>{
     fetchCartItems()
@@ -76,10 +81,18 @@ const Cart = () => {
   }
   return (
     <div className="cart-container">
-      <div className="total">
+      {isempty?(<>
+      
+        <h3 style={{textAlign:"center"}}>No Items in the Cart</h3>
+        <Form style={{textAlign:"center"}}>
+        <p> <a href='/products' >Go to Poducts page</a></p>
+        </Form>
+        </>):(
+        <>
+        <div className="total">
         <h4>Total : {total}</h4>
       </div>
-      {cartItems.length === 0 ? (
+      {products.length === 0 ? (
         <h3 style={{ textAlign: "center" }}>No Produts in the Cart</h3>
       ) : (
         <>
@@ -90,6 +103,7 @@ const Cart = () => {
           })}
           <button onClick={handlePayment} style={{margin:"0 auto"}} >Proceed to payment</button>
         </>
+      )}</>
       )}
     </div>
   );

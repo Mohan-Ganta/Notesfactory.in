@@ -13,6 +13,12 @@ const Register = () => {
     const handleRegister = (vals)=>{
         console.log(vals)
         const url = "http://localhost:5000/users/register"
+        const data = {
+          Products : [],
+          Name: vals.Name,
+          Email: vals.Email,
+          Password: vals.Password
+        }
         axios.post(url,vals)
         .then(res=>toast.success("User Registration successful",{position:"top-center"}))
         .catch(err=>toast.error("Registration Failed",{position:"top-center"}))

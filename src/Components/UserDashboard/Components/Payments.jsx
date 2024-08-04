@@ -7,10 +7,14 @@ import "./Payments.module.css";
 import { useLocation } from 'react-router-dom';
 
 const Payments = () => {
+  const userdata = JSON.parse(localStorage.getItem("userdata"))
+
+  const [paymentImg, setPaymentImg] = useState();
+  const [paymentUrl, setPaymentUrl] = useState();
+  const [uploadText, setUploadText] = useState("Upload");
   const location = useLocation();
   const products = location.state;
 
-  // Debug logging to understand products structure
   console.log('Products:', products);
 
   const totalAmount = products.reduce((total, item) => total + item.cost, 0);
@@ -22,13 +26,8 @@ const Payments = () => {
     });
   };
 
-  const handlePayment = () => {
-    alert("okok");
-  };
+  
 
-  const [paymentImg, setPaymentImg] = useState();
-  const [paymentUrl, setPaymentUrl] = useState();
-  const [uploadText, setUploadText] = useState("Upload");
 
   const handleImageChange = (e) => {
     setPaymentImg(e.target.files[0]);
@@ -56,9 +55,27 @@ const Payments = () => {
     }
   };
 
-  const handlePaymentProceed = (e) => {
-    e.preventDefault();
-    // Add your payment proceed logic here
+  const handlePaymentProceed = (vals) => {
+    if(paymentUrl) {
+      toast.error("Upload the Payment Proof")
+    }
+    console.log("products ready for checkout : ",products)
+    console.log("Values : ",vals)
+    const url = `http://localhost:5000/purchases/addpurchase`
+    const data = {
+      Products:products,
+      UserId:userdata._id,
+      Amount:totalAmount,
+      PaymentUTR:vals.utr,
+      PaymentProof:paymentUrl,
+      isApproved:false
+    }
+    console.log(data)
+    axios.post(url,data)
+    .then(res=>{
+      toast.success("Order Placed Successfully")
+    })
+    .catch("Error placing Order! Please Try Again!!")
   };
 
   return (
@@ -69,10 +86,10 @@ const Payments = () => {
         <img src="" alt="Qr code here" />
       </div>
       <div className="payment-form">
-        <Form onFinish={handlePayment}>
+        <Form onFinish={handlePaymentProceed}>
           
           <Form.Item className='label' label="UTR Number"></Form.Item>
-          <Form.Item name="username">
+          <Form.Item name="utr">
             <Input block placeholder='Enter the UTR ID' required></Input>
           </Form.Item>
           <Form.Item className="label" label="Payment Proof"></Form.Item>
@@ -81,7 +98,7 @@ const Payments = () => {
             <button type="button" onClick={handleFileUpload}>{uploadText}</button>
           </Form.Item>
           <Form.Item>
-            <Button block type='primary' onClick={handlePaymentProceed} htmlType='submit'>Proceed</Button>
+            <Button block type='primary' htmlType='submit'>Proceed</Button>
           </Form.Item>
           <p><a href='/login'>Cancel Payment</a></p>
         </Form>

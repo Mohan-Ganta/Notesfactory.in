@@ -4,17 +4,18 @@ import axios from 'axios'
 import "./Login.css"
 import { toast, ToastContainer } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { Password } from '@mui/icons-material'
 
 const Login = () => {
     const navigate = useNavigate()
     const handleLogin = (vals)=>{
         console.log(vals)
-        const url  = `http://localhost:5000/users/loginuser/${vals.email}/${vals.password}`
-      axios.get(url)
+        const url  = `http://localhost:5000/users/login`
+      axios.post(url,{email:vals.email,Password:vals.password})
       .then(res=>{
         localStorage.setItem("userdata",JSON.stringify(res.data))
         toast.success("Login Successful",{position:"top-center"})
-        navigate("/home")
+        navigate("/products")
       })
       .catch(err=>{  
         toast.error("Invaid Credentials",{position:"top-center"})
